@@ -1,0 +1,153 @@
+#MongoDB
+In c drive: mongod.exe
+
+till bin path copy and on terminal => mongo.exe
+
+
+creating db => use mydb
+show dbs
+name of db => db
+db.createCollections("users")
+show collections
+db.users.insert({name: "Vani" , email: "xyz@gmail.com"})
+db.users.insert({name: "Hunny" , email: "abc@gmail.com"})
+db.users.find()
+db.users.update({name: "Vani"},{$set: {name: "Soniya"}})
+db.users.find()
+db.users.remove({name: "Hunny"})
+db.users.find()
+db.users.ensureIndex({"email" : 1,})
+
+
+1=> ascending
+-1=>descending
+
+use nameofdatabase
+
+#Using mongo shell
+mongosh
+show dbs
+use bookstore (switch to bookstore database)
+cls (clear)
+db(shows list of database)
+show collections
+var name ="yoshi"( creates variable)
+name(op is Yoshi)
+exit
+
+#Adding documents
+db.createCollections("books")
+db.books.insertOne({title: "The color of magic", author: "abc", pages: 300, rating: 7, genres: ["fantasy", "magic"]})
+db.authors.insertOne({name; "abc", age: "30"})
+db.books.insertMany([{title: "The color of magic", author: "abc", pages: 300, rating: 7, genres: ["fantasy", "magic"]}, {title: "The color of magic", author: "abc", pages: 300, rating: 7, genres: ["fantasy", "magic"]}])
+db.books.find() =>display all the collections
+db.books.find({author: "abc"})
+db.books.findOne({author: "abc"})
+
+db.books.find().count()
+db.books.find({author: "abc"}).count()
+db.books.find().limit(3)
+db.books.find().sort({title: 1}) => ascending order
+db.books.find().sort({title: 1}).limit(3)
+
+#Hadoop
+#Mapper
+
+#!/usr/bin/env python3
+import sys
+
+# Mapper function
+def mapper():
+    for line in sys.stdin:
+        # Strip leading/trailing whitespaces and split line into words
+        words = line.strip().split()
+        for word in words:
+            # Emit word and count 1
+            print(f"{word}\t1")
+
+if __name__ == "__main__":
+    mapper()
+
+#Reducer
+#!/usr/bin/env python3
+import sys
+
+# Reducer function
+def reducer():
+    current_word = None
+    current_count = 0
+
+    for line in sys.stdin:
+        # Parse input
+        word, count = line.strip().split("\t")
+        count = int(count)
+
+        # Check if we are still counting the same word
+        if current_word == word:
+            current_count += count
+        else:
+            if current_word:
+                # Emit the word and its total count
+                print(f"{current_word}\t{current_count}")
+            current_word = word
+            current_count = count
+
+    # Output the last word
+    if current_word:
+        print(f"{current_word}\t{current_count}")
+
+if __name__ == "__main__":
+    reducer()
+
+
+
+#Commands
+start-dfs.cmd
+start-yarn.cmd
+
+
+# HDFS Commands with Explanations
+
+# 1. Directory Management
+hdfs dfs -mkdir /path/to/directory             # Create a directory in HDFS.
+hdfs dfs -rm -r /path/to/directory             # Delete a directory and its contents.
+hdfs dfs -ls /path                             # List files and directories in the given path.
+hdfs dfs -du -h /path                          # Show disk usage of a directory.
+
+# 2. File Management
+hdfs dfs -put localfile.txt /hdfs/directory/   # Upload a file to HDFS.
+hdfs dfs -get /hdfs/file /local/directory/     # Download a file from HDFS.
+hdfs dfs -cat /path/to/file                    # Display the content of a file.
+hdfs dfs -appendToFile localfile.txt /hdfs/file  # Append to an existing HDFS file.
+hdfs dfs -cp /source/path /destination/path    # Copy a file within HDFS.
+hdfs dfs -mv /source/path /destination/path    # Move or rename a file in HDFS.
+hdfs dfs -rm /path/to/file                     # Delete a file in HDFS.
+
+# 3. Viewing File or Directory Info
+hdfs dfs -stat /path/to/file                   # View file statistics (modification time, size, etc.).
+hdfs dfs -cat /path/to/file | head -n 5        # Show the first 5 lines of a file.
+hdfs dfs -checksum /path/to/file               # Check the checksum of a file.
+hdfs dfs -tail /path/to/file                   # Show the last few lines of a file.
+hdfs dfs -df -h                                # Show the HDFS disk space status.
+
+# 4. Administrative Commands
+hdfs dfsadmin -report                          # Get a detailed report of the HDFS cluster.
+hdfs dfsadmin -safemode get                    # Check if HDFS is in safe mode.
+hdfs dfsadmin -safemode leave                  # Exit safe mode in HDFS.
+hdfs dfs -setrep -w 3 /path/to/file            # Change the replication factor for a file.
+
+# 5. Disk Usage and Maintenance
+hdfs dfs -du -h /path                          # Display disk usage in human-readable format.
+hdfs dfs -test -e /path                        # Test if a file/directory exists.
+hdfs dfs -chmod 755 /path/to/file              # Change permissions of a file/directory.
+hdfs dfs -chown user:group /path/to/file       # Change ownership of a file/directory.
+hdfs dfs -touchz /path/to/file                 # Update file timestamps (last modified/accessed).
+
+# 6. Help and Troubleshooting
+hdfs dfs -help                                 # List all HDFS commands with usage.
+hdfs dfs -help put                             # Get detailed help for the 'put' command.
+
+
+
+
+ 
